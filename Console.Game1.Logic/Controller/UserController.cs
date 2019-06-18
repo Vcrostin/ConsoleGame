@@ -146,27 +146,7 @@ namespace ConsoleGame1.Logic.Controller
                     new Element("No")
                 }};
             ChoseMenu Menu = new ChoseMenu(elements);
-            Console.CursorVisible = false;
-            do
-            {
-                Menu.Draw();
-                cki = Console.ReadKey(true);
-                switch (cki.Key)
-                {
-                    case ConsoleKey.LeftArrow:
-                        Menu.SelectPrevY();
-                        break;
-                    case ConsoleKey.RightArrow:
-                        Menu.SelectNextY();
-                        break;
-                    case ConsoleKey.UpArrow:
-                        Menu.SelectPrevX();
-                        break;
-                    case ConsoleKey.DownArrow:
-                        Menu.SelectNextX();
-                        break;
-                }
-            } while (cki.Key!=ConsoleKey.Enter);
+            Menu.MenuButtonSet(out cki);
             switch (Menu.ChosenElement.Text)
             {
                 case "Yes":

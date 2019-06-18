@@ -107,6 +107,30 @@ namespace ConsoleGame1.Logic.Model
                 Console.WriteLine();
             }
         }
+        public void MenuButtonSet(out ConsoleKeyInfo cki)
+        {
+            do
+            {
+                Draw();
+                Console.CursorVisible = false;
+                cki = Console.ReadKey(true);
+                switch (cki.Key)
+                {
+                    case ConsoleKey.LeftArrow:
+                        SelectPrevY();
+                        break;
+                    case ConsoleKey.RightArrow:
+                        SelectNextY();
+                        break;
+                    case ConsoleKey.UpArrow:
+                        SelectPrevX();
+                        break;
+                    case ConsoleKey.DownArrow:
+                        SelectNextX();
+                        break;
+                }
+            } while (cki.Key != ConsoleKey.Enter);
+        }
     }
     //Делегат который не пригодился.
     public delegate void OnClickEnter();
