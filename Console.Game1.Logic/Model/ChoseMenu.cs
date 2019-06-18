@@ -11,46 +11,71 @@ namespace ConsoleGame1.Logic.Model
         /// <summary>
         /// Выбранный элемент
         /// </summary>
-        public Element ChosenElement => Elements[Index];
+        public Element ChosenElement => Elements[IndexY, IndexX];
         /// <summary>
         /// Текущий выбранный элемент.
         /// </summary>
-        public int Index { get; set; }
+        public int IndexX { get; set; }
+        public int IndexY { get; set; }
         /// <summary>
         /// Все элементы выбора.    
         /// </summary>
-        public Element[] Elements { get; set; }
+        public Element[,] Elements { get; set; }
         /// <summary>
         /// Создание класса выделения.
         /// </summary>
         /// <param name="a"> Массив из выделяемых элементов. </param>
-        public ChoseMenu(Element[] a)
+        public ChoseMenu(Element[,] a)
         {
             Elements = a;
-            Elements[0].IsSelected = true;
+            Elements[0, 0].IsSelected = true;
         }
 
         /// <summary>
-        /// Выбор следующего элемента.
+        /// Выбор следующего элемента. По горизонтали.
         /// </summary>
-        public void SelectNext()
+        public void SelectNextY()
         {
-            if (Index != Elements.Count() - 1)
+            if (IndexX != Elements.GetLength(1) - 1)
             {
-                Elements[Index].IsSelected = false;
-                Elements[++Index].IsSelected = true;
+                Elements[IndexY,IndexX].IsSelected = false;
+                Elements[IndexY,++IndexX].IsSelected = true;
             }
         }
 
         /// <summary>
-        /// Выбор предыдущего элемента.
+        /// Выбор предыдущего элемента. По горизонтали.
         /// </summary>
-        public void SelectPrev()
+        public void SelectPrevY()
         {
-            if (Index != 0)
+            if (IndexX != 0)
             {
-                Elements[Index].IsSelected = false;
-                Elements[--Index].IsSelected = true;
+                Elements[IndexY, IndexX].IsSelected = false;
+                Elements[IndexY, --IndexX].IsSelected = true;
+            }
+        }
+
+        /// <summary>
+        /// Выбор следующего элемента. По вертикали.
+        /// </summary>
+        public void SelectNextX()
+        {
+            if(IndexY != Elements.GetLength(0) - 1)
+            {
+                Elements[IndexY, IndexX].IsSelected = false;
+                Elements[++IndexY, IndexX].IsSelected = true;
+            }
+        }
+
+        /// <summary>
+        ///  Выбор предыдущего элемента. По вертикали.
+        /// </summary>
+        public void SelectPrevX()
+        {
+            if (IndexY != 0)
+            {
+                Elements[IndexY, IndexX].IsSelected = false;
+                Elements[--IndexY, IndexX].IsSelected = true;
             }
         }
 
@@ -71,11 +96,15 @@ namespace ConsoleGame1.Logic.Model
             }
             else
             {
-                Console.SetCursorPosition(0, Console.CursorTop - Elements.Count());
+                Console.SetCursorPosition(0, Console.CursorTop - Elements.GetLength(0));
             }
-            foreach(var element in Elements)
+            for(int i = 0; i < Elements.GetLength(0); i++)
             {
-                element.Print();
+                for(int j = 0; j < Elements.GetLength(1); j++)
+                {
+                    Elements[i, j].Print();
+                }
+                Console.WriteLine();
             }
         }
     }
@@ -129,8 +158,9 @@ namespace ConsoleGame1.Logic.Model
                 Console.BackgroundColor = SelectedBackColor;
                 Console.ForegroundColor = SelectedForeColor;
             }
-            Console.WriteLine(this.Text);
+            Console.Write(this.Text);
             Console.ResetColor();
+            Console.Write(" ");
         }
     }
     

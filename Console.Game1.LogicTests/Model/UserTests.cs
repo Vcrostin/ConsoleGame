@@ -35,22 +35,28 @@ namespace ConsoleGame1.Logic.Model.Tests
         [TestMethod()]
         public void ChoseMenuTest()
         {
-            Element[] elements = new Element[5];
-            for(int i = 0; i < elements.Length; i++)
+            Element[,] elements = new Element[5,5];
+            for(int i = 0; i < elements.GetLength(0); i++)
             {
-                elements[i] = new Element(Guid.NewGuid().ToString());
+                for (int j = 0; j < elements.GetLongLength(1); j++)
+                {
+                    elements[i,j] = new Element(Guid.NewGuid().ToString());
+                }
             }
             ChoseMenu TestMenu = new ChoseMenu(elements);
             int k = 0;
-            foreach(var s in elements)
+            for (int i = 0; i < elements.GetLength(0); i++)
             {
-                if (s.IsSelected == true)
+                for (int j = 0; j < elements.GetLongLength(1); j++)
                 {
-                    k++;
-                }
-                if (k > 1)
-                {
-                    Assert.Fail();
+                    if (elements[i, j].IsSelected)
+                    {
+                        k++;
+                    }
+                    if (k > 1)
+                    {
+                        Assert.Fail();
+                    }
                 }
             }
         }

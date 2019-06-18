@@ -140,11 +140,11 @@ namespace ConsoleGame1.Logic.Controller
         public void CreateYesNoMenu()
         {
             ConsoleKeyInfo cki;
-            var elements = new[]
-            {
-                        new Element("Yes"),
-                        new Element("No")
-            };
+            Element[,] elements = 
+                        {{
+                    new Element("Yes"),
+                    new Element("No")
+                }};
             ChoseMenu Menu = new ChoseMenu(elements);
             Console.CursorVisible = false;
             do
@@ -153,11 +153,17 @@ namespace ConsoleGame1.Logic.Controller
                 cki = Console.ReadKey(true);
                 switch (cki.Key)
                 {
+                    case ConsoleKey.LeftArrow:
+                        Menu.SelectPrevY();
+                        break;
+                    case ConsoleKey.RightArrow:
+                        Menu.SelectNextY();
+                        break;
                     case ConsoleKey.UpArrow:
-                        Menu.SelectPrev();
+                        Menu.SelectPrevX();
                         break;
                     case ConsoleKey.DownArrow:
-                        Menu.SelectNext();
+                        Menu.SelectNextX();
                         break;
                 }
             } while (cki.Key!=ConsoleKey.Enter);
