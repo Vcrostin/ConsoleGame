@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\GameController.cs" />
     <Compile Include="Controller\UserController.cs" />
     <Compile Include="Model\ChoseMenu.cs" />
+    <Compile Include="Model\PlayInterface.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

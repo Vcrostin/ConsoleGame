@@ -107,8 +107,12 @@ namespace ConsoleGame1.Logic.Model
                 Console.WriteLine();
             }
         }
-        public void MenuButtonSet(out ConsoleKeyInfo cki)
+        /// <summary>
+        /// 
+        /// </summary>
+        public void MenuButtonSet()
         {
+            ConsoleKeyInfo cki;
             do
             {
                 Draw();

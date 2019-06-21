@@ -39,12 +39,15 @@ namespace ConsoleGame1
                         new Element(ExitButton)
                     }
                 };
-                ConsoleKeyInfo cki;
                 ChoseMenu MainMenu = new ChoseMenu(elements);
-                MainMenu.MenuButtonSet(out cki);
+                MainMenu.MenuButtonSet();
                 switch (MainMenu.ChosenElement.Text)
                 {
                     case PlayButton:
+                        PlayInterface A = new PlayInterface();
+                        A.CreateBorder();
+                        A.PositionSet(50, 50);
+                        GameController.Movement(A);
                         //TODO: добавить действия..
                         break;
                     case StatisticsButton:

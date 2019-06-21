@@ -139,14 +139,13 @@ namespace ConsoleGame1.Logic.Controller
         /// </summary>
         public void CreateYesNoMenu()
         {
-            ConsoleKeyInfo cki;
             Element[,] elements = 
                         {{
                     new Element("Yes"),
                     new Element("No")
                 }};
             ChoseMenu Menu = new ChoseMenu(elements);
-            Menu.MenuButtonSet(out cki);
+            Menu.MenuButtonSet();
             switch (Menu.ChosenElement.Text)
             {
                 case "Yes":
