@@ -17,7 +17,7 @@ namespace ConsoleGame1.Logic.Controller
         /// <summary>
         ///  Логин текущего пользователя.
         /// </summary>
-        public string CurentUserName { get; set; }
+        public static string CurentUserName { get; set; }
         /// <summary>
         /// Текущий юзер.
         /// </summary>
@@ -52,7 +52,7 @@ namespace ConsoleGame1.Logic.Controller
                     {
                         throw new TimeoutException("Вы исчерпали лимит попыток на пароль");
                     }
-                } while (User.CheckPass(checkpassword, UserName,UsersData));
+                } while (User.CheckPass(checkpassword, CurentUserName, UsersData));
             }
         }
 
@@ -91,12 +91,12 @@ namespace ConsoleGame1.Logic.Controller
         /// <summary>
         /// Авторизация.
         /// </summary>
-        public static string Authorization()
+        public static void Authorization()
         {
+            
             Console.WriteLine("Введите логин");
             string name = Console.ReadLine();
             UserController user = new UserController(name);
-            return name;
         }
 
         /// <summary>

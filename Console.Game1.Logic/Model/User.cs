@@ -14,6 +14,16 @@ namespace ConsoleGame1.Logic.Model
         public string Login { get; }
 
         /// <summary>
+        /// id след. нового пользователя
+        /// </summary>
+        private static int NextID { get; set; } = 0;
+
+        /// <summary>
+        /// ID текущего пользователя.
+        /// </summary>
+        private int ID { get; }
+
+        /// <summary>
         /// Пароль.
         /// </summary>
         private string Password { get; }
@@ -74,9 +84,10 @@ namespace ConsoleGame1.Logic.Model
         /// <param name="BirthDay"> Дата рождения. </param>
         public User(string Name,string Password,DateTime BirthDay)
         {
+            ID = ++NextID;
             Login = Name;
             Sold = Guid.NewGuid().ToString();
-            Password = GetHashCode(Sold + Password);
+            this.Password = GetHashCode(Sold + Password);
             DateOfBirth = BirthDay;
         }
 
@@ -114,7 +125,7 @@ namespace ConsoleGame1.Logic.Model
                 }
             }
             Console.WriteLine("ОШИБКА");
-            return new User("Ошибка 404");
+            throw new Exception("ПРОИЗОШЛА ХЕРНЯ!");
         }
 
         /// <summary>
@@ -126,8 +137,8 @@ namespace ConsoleGame1.Logic.Model
         /// <returns> Возвращает bool значение. </returns>
         static public bool CheckPass(string checkpass,string Name,List<User>UsersData)
         {
-            string MBpass = GetHashCode(checkpass + ReturnChosenUser(Name, UsersData));
-            return MBpass == checkpass;
+            string MBpass = GetHashCode(ReturnChosenUser(Name, UsersData).Sold + checkpass);
+            return MBpass != ReturnChosenUser(Name, UsersData).Password;
         }
 
 

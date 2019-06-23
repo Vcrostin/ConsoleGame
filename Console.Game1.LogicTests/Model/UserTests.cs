@@ -30,6 +30,7 @@ namespace ConsoleGame1.Logic.Model.Tests
             var getHash2 = User.GetHashCode(password);
             Assert.AreEqual(getHash1, getHash2);
             Assert.AreNotEqual(password, getHash1);
+            Assert.AreNotEqual(getHash1, User.GetHashCode(password + 1));
         }
 
         [TestMethod()]

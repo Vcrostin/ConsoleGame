@@ -7,12 +7,14 @@ namespace ConsoleGame1
 {
     class Program
     {
+        //Проблема с паролями.
         static void Main(string[] args)
         {
             Console.Title = "Первая игра";
-            string name = UserController.Authorization();
-            User CurentUser = UserController.ReturnCurentUser(name);
+            UserController.Authorization();
+            string name = UserController.CurentUserName;
             Console.Clear();
+            User CurentUser = UserController.ReturnCurentUser(name);
             Console.WriteLine("Авторизация прошла успешно!");
             Console.WriteLine($"Вы вошли под логином {CurentUser.Login}");
             Console.WriteLine("Для продолжения нажмите любую клавишу...");
@@ -47,7 +49,7 @@ namespace ConsoleGame1
                         PlayInterface A = new PlayInterface();
                         A.CreateBorder();
                         A.PositionSet(50, 50);
-                        GameController.Movement(A);
+                        GameController.KeyAssignment(A);
                         //TODO: добавить действия..
                         break;
                     case StatisticsButton:
