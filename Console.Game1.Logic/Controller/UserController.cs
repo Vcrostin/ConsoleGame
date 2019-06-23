@@ -21,7 +21,7 @@ namespace ConsoleGame1.Logic.Controller
         /// <summary>
         /// Текущий юзер.
         /// </summary>
-        User CurentUser { get; set; }
+        public User CurentUser { get; set; }
 
         /// <summary>
         /// Создание "пробного" пользователя
@@ -59,7 +59,7 @@ namespace ConsoleGame1.Logic.Controller
         /// <summary>
         /// Сохранение данных пользователей.
         /// </summary>
-        public void SaveData()
+        public static void SaveData()
         {
             var formatter = new BinaryFormatter();
             using (var fs = new FileStream("DataCollections.dat", FileMode.OpenOrCreate))

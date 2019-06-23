@@ -13,6 +13,7 @@ namespace ConsoleGame1.Logic.Controller
     public class GameController
     {
         private static List<Item> ItemsCollections { get; set; }
+
         /// <summary>
         /// Назначение клавиш при движении объекта.
         /// </summary>
@@ -25,24 +26,7 @@ namespace ConsoleGame1.Logic.Controller
                 cki = Console.ReadKey(true);
                 if (((cki.Modifiers & ConsoleModifiers.Alt) != 0) && (cki.Key == ConsoleKey.E))
                 {
-                    ItemsCollections = LoadData();
-                    Console.Clear();
-                    Console.SetCursorPosition(0, 0);
-                    Console.WriteLine("Создание нового элемента инвентаря");
-                    Console.WriteLine("Введите имя:");
-                    Console.CursorVisible = true;
-                    string name = Console.ReadLine();
-                    Console.WriteLine("Введите цену:");
-                    double price = double.Parse(Console.ReadLine());
-                    Console.WriteLine("Введите описание:");
-                    string Describe = Console.ReadLine();
-                    ItemsCollections.Add(new Item(name, price, Describe));
-                    SaveData();
-                    Console.CursorVisible = false;
-                    Console.WriteLine("Элемент успешно создан. Для продолжения нажмите любую клавишу.");
-                    Console.ReadKey();
-                    A.CreateBorder();
-                    A.Draw();
+                    PressAltAndE(A);
                 }
                 else
                 {
@@ -67,6 +51,7 @@ namespace ConsoleGame1.Logic.Controller
                 }
             } while (cki.Key != ConsoleKey.Escape);
         }
+
         /// <summary>
         /// Перемещение вверх.
         /// </summary>
@@ -79,6 +64,7 @@ namespace ConsoleGame1.Logic.Controller
                 A.PositionSet(A.X, A.Y - 1);
             }
         }
+
         /// <summary>
         /// Перемещение вниз.
         /// </summary>
@@ -91,6 +77,7 @@ namespace ConsoleGame1.Logic.Controller
                 A.PositionSet(A.X, A.Y + 1);
             }
         }
+
         /// <summary>
         /// Перемещение влево.
         /// </summary>
@@ -103,6 +90,7 @@ namespace ConsoleGame1.Logic.Controller
                 A.PositionSet(A.X - 1, A.Y);
             }
         }
+
         /// <summary>
         /// Перемещение вправо.
         /// </summary>
@@ -115,6 +103,7 @@ namespace ConsoleGame1.Logic.Controller
                 A.PositionSet(A.X + 1, A.Y);
             }
         }
+
         /// <summary>
         /// Вызов инвентаря (по умолчанию кл E).
         /// </summary>
@@ -123,20 +112,55 @@ namespace ConsoleGame1.Logic.Controller
         {
             Console.Clear();
             ItemsCollections = LoadData();
-            Element[,] ListElement = null;
-            foreach(var s in ItemsCollections)
+            Element[,] ListElement = new Element[0, 0];
+            foreach (var s in ItemsCollections)
             {
-                if (ListElement == null)
-                {
-                    ListElement = new Element[0, 0];
-                }
-
                 ListElement = TheLastElement(ListElement, s);
             }
+            Element[,] AddListElement = new Element[ListElement.GetLength(0) + 1, ListElement.GetLength(1)];
+            for (int i = 0; i < ListElement.GetLength(0); i++)
+            {
+                for (int j = 0; j < ListElement.GetLength(1); j++)
+                {
+                    AddListElement[i, j] = ListElement[i, j];
+                }
+            }
+            for (int i = 0; i < ListElement.GetLength(1) - 1; i++)
+            {
+                AddListElement[ListElement.GetLength(0), i] = new Element(" ");
+            }
+            AddListElement[ListElement.GetLength(0), ListElement.GetLength(1) - 1] = new Element("Выход");
+            ListElement = AddListElement;
             ChoseMenu ListOfItems = new ChoseMenu(ListElement);
+            ListOfItems.IndexX = Item.Number - 1;
+            ListOfItems.Elements[0, 0].IsSelected = false;
+            ListOfItems.Elements[0, Item.Number - 1].IsSelected = true;
             ListOfItems.MenuButtonSet();
-
+            while (ListOfItems.IndexY < ItemsCollections.Count)
+            {
+                if (ListOfItems.IndexX == Item.Number - 1)
+                {
+                    UserController.ReturnCurentUser(UserController.CurentUserName).Count[ListOfItems.IndexY]--;
+                    ListOfItems.Elements[ListOfItems.IndexY, 0].Text = (int.Parse(ListOfItems.Elements[ListOfItems.IndexY, 0].Text) - 1).ToString();
+                }
+                else
+                {
+                    UserController.ReturnCurentUser(UserController.CurentUserName).Count[ListOfItems.IndexY]++;
+                    ListOfItems.Elements[ListOfItems.IndexY, 0].Text = (int.Parse(ListOfItems.Elements[ListOfItems.IndexY, 0].Text) + 1).ToString();
+                }
+                UserController.SaveData();
+                ListOfItems.MenuButtonSet();
+            } 
+            A.CreateBorder();
+            A.Draw();
         }
+
+        /// <summary>
+        /// Доп метод для реализации инвентаря.
+        /// </summary>
+        /// <param name="Listing"> Массив куда нужно внести объекты (фактически создается новый массив)</param>
+        /// <param name="s"> Элемент класса Item которого нужно разделить на составляющие чтобы добавить эти составляющие в массив по x увечив его по y </param>
+        /// <returns> Возращает новый массив дополненный элементами из Item s</returns>
         private static Element[,] TheLastElement(Element[,] Listing,Item s)
         {
             Element[,] newElement = new Element[Listing.GetLength(0) + 1, Item.Number];
@@ -147,13 +171,17 @@ namespace ConsoleGame1.Logic.Controller
                     newElement[i, j] = Listing[i, j];
                 }
             }
-            for(int j = 0; j < Item.Number; j++)
+            for (int j = 0; j < Item.Number; j++)
             {
                 newElement[Listing.GetLength(0), j] = new Element(s[j]);
             }
             return newElement;
         }
 
+        /// <summary>
+        /// Загрузка данных содержащих информацию о возможных объектах.
+        /// </summary>
+        /// <returns> Возращает ссылку на коллекцию.</returns>
         public static List<Item> LoadData()
         {
             var formatter = new BinaryFormatter();
@@ -169,6 +197,10 @@ namespace ConsoleGame1.Logic.Controller
                 }
             }
         }
+
+        /// <summary>
+        /// Сохранение данных коллекции ItemsCollections.
+        /// </summary>
         public static void SaveData()
         {
             var formatter = new BinaryFormatter();
@@ -176,6 +208,48 @@ namespace ConsoleGame1.Logic.Controller
             {
                 formatter.Serialize(fs, ItemsCollections);
             }
+        }
+
+        /// <summary>
+        /// Команды выполняемые при удержании альт и е (т.е. добавление элементов в коллекцию вручную)
+        /// </summary>
+        /// <param name="A"> Ссылка на интерфейс объекта.ы</param>
+        public static void PressAltAndE(PlayInterface A)
+        {
+            ItemsCollections = LoadData();
+            Console.Clear();
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("Создание нового элемента инвентаря");
+            Console.WriteLine("Введите имя:");
+            Console.CursorVisible = true;
+            string name = Console.ReadLine();
+            Console.WriteLine("Введите цену:");
+            double price = double.Parse(Console.ReadLine());
+            Console.WriteLine("Введите описание:");
+            string Describe = Console.ReadLine();
+            int ID = ItemsCollections.Count + 1;
+            ItemsCollections.Add(new Item(name, price, Describe, ID));
+            if (UserController.ReturnCurentUser(UserController.CurentUserName).Count == null)
+            {
+                UserController.ReturnCurentUser(UserController.CurentUserName).Count = new int[1];
+            }
+            else
+            {
+                int[] a = new int[UserController.ReturnCurentUser(UserController.CurentUserName).Count.Length + 1];
+                int i = 0;
+                foreach (var s in UserController.ReturnCurentUser(UserController.CurentUserName).Count)
+                {
+                    a[i++] = s;
+                }
+                UserController.ReturnCurentUser(UserController.CurentUserName).Count = a;
+            }
+            SaveData();
+            UserController.SaveData();
+            Console.CursorVisible = false;
+            Console.WriteLine("Элемент успешно создан. Для продолжения нажмите любую клавишу.");
+            Console.ReadKey();
+            A.CreateBorder();
+            A.Draw();
         }
     }
 }

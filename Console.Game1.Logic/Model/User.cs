@@ -12,37 +12,34 @@ namespace ConsoleGame1.Logic.Model
         /// Логин.
         /// </summary>
         public string Login { get; }
-
         /// <summary>
         /// id след. нового пользователя
         /// </summary>
         private static int NextID { get; set; } = 0;
-
+        /// <summary>
+        /// Кол-во предметов в инвентаре каждого типа.
+        /// </summary>
+        public int[] Count;
         /// <summary>
         /// ID текущего пользователя.
         /// </summary>
         private int ID { get; }
-
         /// <summary>
         /// Пароль.
         /// </summary>
         private string Password { get; }
-
         /// <summary>
         /// Соль для пароля.
         /// </summary>
         string Sold { get; }
-
         /// <summary>
         /// Дата рождение.
         /// </summary>
         public DateTime DateOfBirth { get; set; }
-
         /// <summary>
         /// Дата регистрации в приложении.
         /// </summary>
         DateTime DateOfRegistration { get; }
-
         /// <summary>
         /// Возраст.
         /// </summary>
@@ -61,7 +58,6 @@ namespace ConsoleGame1.Logic.Model
                 }
             }
         }
-
         /// <summary>
         /// Баланс счета.
         /// </summary>s

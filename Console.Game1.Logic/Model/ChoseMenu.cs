@@ -36,7 +36,7 @@ namespace ConsoleGame1.Logic.Model
         /// </summary>
         public void SelectNextY()
         {
-            if ((IndexX != Elements.GetLength(1) - 1) && (Elements[IndexY, IndexX + 1].Text != ""))
+            if ((IndexX != Elements.GetLength(1) - 1) && (Elements[IndexY, IndexX + 1].Text != " "))
             {
                 Elements[IndexY, IndexX].IsSelected = false;
                 Elements[IndexY, ++IndexX].IsSelected = true;
@@ -48,7 +48,7 @@ namespace ConsoleGame1.Logic.Model
         /// </summary>
         public void SelectPrevY()
         {
-            if ((IndexX != 0)&&(Elements[IndexY,IndexX-1].Text!=""))
+            if ((IndexX != 0)&&(Elements[IndexY,IndexX-1].Text!=" "))
             {
                 Elements[IndexY, IndexX].IsSelected = false;
                 Elements[IndexY, --IndexX].IsSelected = true;
@@ -60,7 +60,7 @@ namespace ConsoleGame1.Logic.Model
         /// </summary>
         public void SelectNextX()
         {
-            if ((IndexY != Elements.GetLength(0) - 1) && (Elements[IndexY + 1, IndexX].Text != ""))
+            if ((IndexY != Elements.GetLength(0) - 1) && (Elements[IndexY + 1, IndexX].Text != " "))
             {
                 Elements[IndexY, IndexX].IsSelected = false;
                 Elements[++IndexY, IndexX].IsSelected = true;
@@ -72,7 +72,7 @@ namespace ConsoleGame1.Logic.Model
         /// </summary>
         public void SelectPrevX()
         {
-            if ((IndexY != 0) && (Elements[IndexY - 1, IndexX].Text != ""))
+            if ((IndexY != 0) && (Elements[IndexY - 1, IndexX].Text != " "))
             {
                 Elements[IndexY, IndexX].IsSelected = false;
                 Elements[--IndexY, IndexX].IsSelected = true;
@@ -133,6 +133,10 @@ namespace ConsoleGame1.Logic.Model
                     case ConsoleKey.DownArrow:
                         SelectNextX();
                         break;
+                        /*
+                    case ConsoleKey.Escape:
+                        throw new FormatException("Нажата клавиша Esc");
+                        */
                 }
             } while (cki.Key != ConsoleKey.Enter);
         }
