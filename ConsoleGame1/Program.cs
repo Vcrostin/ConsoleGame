@@ -50,7 +50,6 @@ namespace ConsoleGame1
                         A.CreateBorder();
                         A.PositionSet(50, 50);
                         GameController.KeyAssignment(A);
-                        //TODO: добавить действия..
                         break;
                     case StatisticsButton:
                         //TODO: добавить действия..

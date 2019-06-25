@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleGame1.Logic.Controller;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,11 +12,14 @@ namespace ConsoleGame1.Logic.Model
         /// <summary>
         /// x коорд.
         /// </summary>
-        public int X { get; set; }
+        public int XBySpace { get; set; }
         /// <summary>
         /// y коорд.
         /// </summary>
-        public int Y { get; set; }
+        public int YBySpace { get; set; }
+        public int XPosByCreatedStuff { get; set; } = 100;
+        public int YPosByCreatedStuff { get; set; } = 50;
+        public ConsoleColor ColorOfStuff { get; set; } = ConsoleColor.White;
 
         /// <summary>
         /// Установка центральной точки фигуры и ее перерисовка.
@@ -24,8 +28,8 @@ namespace ConsoleGame1.Logic.Model
         /// <param name="y"> y коорд. </param>
         public void PositionSet(int x,int y)
         {
-            X = x;
-            Y = y;
+            XBySpace = x;
+            YBySpace = y;
             Draw();
         }
 
@@ -60,8 +64,64 @@ namespace ConsoleGame1.Logic.Model
         /// </summary>
         public void Draw()
         {
-            Console.SetCursorPosition(X - 1, Y);
+            Console.SetCursorPosition(XBySpace - 1, YBySpace);
             Console.Write("|X|");
+            ComparePosStuffAndSpace();
+            Console.ForegroundColor = ColorOfStuff;
+            Console.SetCursorPosition(XPosByCreatedStuff, YPosByCreatedStuff);
+            Console.Write("0");
+            Console.ResetColor();
+        }
+
+        private void ComparePosStuffAndSpace()
+        {
+            if ((XPosByCreatedStuff == XBySpace) && (YPosByCreatedStuff == YBySpace))
+            {
+                Random random = new Random();
+                XPosByCreatedStuff = random.Next(Console.WindowWidth - 3) + 1;
+                YPosByCreatedStuff = random.Next(Console.WindowHeight - 2) + 1;
+                switch (ColorOfStuff)
+                {
+                    case ConsoleColor.White:
+                        UserController.ReturnCurentUser(UserController.CurentUserName).Balance += 10;
+                        UserController.SaveData();
+                        break;
+                    case ConsoleColor.Green:
+                        UserController.ReturnCurentUser(UserController.CurentUserName).Balance += 50;
+                        UserController.SaveData();
+                        break;
+                    case ConsoleColor.Blue:
+                        UserController.ReturnCurentUser(UserController.CurentUserName).Balance += 200;
+                        UserController.SaveData();
+                        break;
+                    case ConsoleColor.Red:
+                        UserController.ReturnCurentUser(UserController.CurentUserName).Balance += 1000;
+                        UserController.SaveData();
+                        break;
+                }
+                int color = random.Next(10);
+                switch (color)
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                        ColorOfStuff = ConsoleColor.White;
+                        break;
+                    case 4:
+                    case 5:
+                    case 6:
+                        ColorOfStuff = ConsoleColor.Green;
+                        break;
+                    case 7:
+                    case 8:
+                        ColorOfStuff = ConsoleColor.Blue;
+                        break;
+                    case 9:
+                        ColorOfStuff = ConsoleColor.Red;
+                        break;
+                }
+            }
         }
 
         /// <summary>
@@ -69,7 +129,7 @@ namespace ConsoleGame1.Logic.Model
         /// </summary>
         public void Clear()
         {
-            Console.SetCursorPosition(X - 1, Y);
+            Console.SetCursorPosition(XBySpace - 1, YBySpace);
             Console.Write("   ");
         }
     }

@@ -19,7 +19,7 @@ namespace ConsoleGame1.Logic.Model
         /// <summary>
         /// Кол-во предметов в инвентаре каждого типа.
         /// </summary>
-        public int[] Count;
+        public int[] Count { get; set; }
         /// <summary>
         /// ID текущего пользователя.
         /// </summary>
@@ -33,7 +33,7 @@ namespace ConsoleGame1.Logic.Model
         /// </summary>
         string Sold { get; }
         /// <summary>
-        /// Дата рождение.
+        /// Дата рождения.
         /// </summary>
         public DateTime DateOfBirth { get; set; }
         /// <summary>

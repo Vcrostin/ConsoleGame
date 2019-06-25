@@ -58,10 +58,10 @@ namespace ConsoleGame1.Logic.Controller
         /// <param name="A"> Объект перемещения. </param>
         private static void MoveUp(PlayInterface A)
         {
-            if (A.Y - 1 > 1)
+            if (A.YBySpace - 1 > 1)
             {
                 A.Clear();
-                A.PositionSet(A.X, A.Y - 1);
+                A.PositionSet(A.XBySpace, A.YBySpace - 1);
             }
         }
 
@@ -71,10 +71,10 @@ namespace ConsoleGame1.Logic.Controller
         /// <param name="A"> Объект перемещения. </param>
         private static void MoveDown(PlayInterface A)
         {
-            if (A.Y + 1 < Console.WindowHeight - 1)
+            if (A.YBySpace + 1 < Console.WindowHeight - 1)
             {
                 A.Clear();
-                A.PositionSet(A.X, A.Y + 1);
+                A.PositionSet(A.XBySpace, A.YBySpace + 1);
             }
         }
 
@@ -84,10 +84,10 @@ namespace ConsoleGame1.Logic.Controller
         /// <param name="A"> Объект перемещения. </param>
         private static void MoveLeft(PlayInterface A)
         {
-            if (A.X - 1 > 2)
+            if (A.XBySpace - 1 > 2)
             {
                 A.Clear();
-                A.PositionSet(A.X - 1, A.Y);
+                A.PositionSet(A.XBySpace - 1, A.YBySpace);
             }
         }
 
@@ -97,10 +97,10 @@ namespace ConsoleGame1.Logic.Controller
         /// <param name="A"> Объект перемещения. </param>
         private static void MoveRight(PlayInterface A)
         {
-            if (A.X + 1 < Console.WindowWidth - 3)
+            if (A.XBySpace + 1 < Console.WindowWidth - 3)
             {
                 A.Clear();
-                A.PositionSet(A.X + 1, A.Y);
+                A.PositionSet(A.XBySpace + 1, A.YBySpace);
             }
         }
 
@@ -117,7 +117,7 @@ namespace ConsoleGame1.Logic.Controller
             {
                 ListElement = TheLastElement(ListElement, s);
             }
-            Element[,] AddListElement = new Element[ListElement.GetLength(0) + 1, ListElement.GetLength(1)];
+            Element[,] AddListElement = new Element[ListElement.GetLength(0) + 2, ListElement.GetLength(1)];
             for (int i = 0; i < ListElement.GetLength(0); i++)
             {
                 for (int j = 0; j < ListElement.GetLength(1); j++)
@@ -130,9 +130,18 @@ namespace ConsoleGame1.Logic.Controller
                 AddListElement[ListElement.GetLength(0), i] = new Element(" ");
             }
             AddListElement[ListElement.GetLength(0), ListElement.GetLength(1) - 1] = new Element("Выход");
+
+            AddListElement[ListElement.GetLength(0) + 1,0] = new Element("Balance");
+            AddListElement[ListElement.GetLength(0) + 1, 1] = new Element(UserController.ReturnCurentUser(UserController.CurentUserName).Balance.ToString());
+            for(int i = 2; i < ListElement.GetLength(1); i++)
+            {
+                AddListElement[ListElement.GetLength(0) + 1, i] = new Element(" ");
+            }
             ListElement = AddListElement;
-            ChoseMenu ListOfItems = new ChoseMenu(ListElement);
-            ListOfItems.IndexX = Item.Number - 1;
+            ChoseMenu ListOfItems = new ChoseMenu(ListElement)
+            {
+                IndexX = Item.Number - 1
+            };
             ListOfItems.Elements[0, 0].IsSelected = false;
             ListOfItems.Elements[0, Item.Number - 1].IsSelected = true;
             ListOfItems.MenuButtonSet();
