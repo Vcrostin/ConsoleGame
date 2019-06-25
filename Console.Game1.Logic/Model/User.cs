@@ -80,6 +80,7 @@ namespace ConsoleGame1.Logic.Model
         /// <param name="BirthDay"> Дата рождения. </param>
         public User(string Name,string Password,DateTime BirthDay)
         {
+            DateOfRegistration = DateTime.Now;
             ID = ++NextID;
             Login = Name;
             Sold = Guid.NewGuid().ToString();

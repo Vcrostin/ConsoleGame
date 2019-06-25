@@ -73,6 +73,9 @@ namespace ConsoleGame1.Logic.Model
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// Метод, сравнивающий значение x и y у корабля и мусора. Изменяет след цвет на рандомный.
+        /// </summary>
         private void ComparePosStuffAndSpace()
         {
             if ((XPosByCreatedStuff == XBySpace) && (YPosByCreatedStuff == YBySpace))

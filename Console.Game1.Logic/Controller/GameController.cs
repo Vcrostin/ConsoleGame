@@ -151,13 +151,16 @@ namespace ConsoleGame1.Logic.Controller
                 {
                     UserController.ReturnCurentUser(UserController.CurentUserName).Count[ListOfItems.IndexY]--;
                     ListOfItems.Elements[ListOfItems.IndexY, 0].Text = (int.Parse(ListOfItems.Elements[ListOfItems.IndexY, 0].Text) - 1).ToString();
+                    UserController.ReturnCurentUser(UserController.CurentUserName).Balance += int.Parse(ListOfItems.Elements[ListOfItems.IndexY, 3].Text);
                 }
                 else
                 {
                     UserController.ReturnCurentUser(UserController.CurentUserName).Count[ListOfItems.IndexY]++;
                     ListOfItems.Elements[ListOfItems.IndexY, 0].Text = (int.Parse(ListOfItems.Elements[ListOfItems.IndexY, 0].Text) + 1).ToString();
+                    UserController.ReturnCurentUser(UserController.CurentUserName).Balance -= int.Parse(ListOfItems.Elements[ListOfItems.IndexY, 3].Text);
                 }
                 UserController.SaveData();
+                ListOfItems.Elements[ListElement.GetLength(0) - 1, 1] = new Element(UserController.ReturnCurentUser(UserController.CurentUserName).Balance.ToString());
                 ListOfItems.MenuButtonSet();
             } 
             A.CreateBorder();
