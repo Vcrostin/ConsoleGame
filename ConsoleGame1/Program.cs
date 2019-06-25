@@ -52,7 +52,7 @@ namespace ConsoleGame1
                         GameController.KeyAssignment(A);
                         break;
                     case StatisticsButton:
-                        //TODO: добавить действия..
+                        StaticsController.StaticList();
                         break;
                     case OptionButton:
                         //TODO: добавить действия..

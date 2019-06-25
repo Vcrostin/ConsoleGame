@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleGame1.Logic.Model;
+using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
@@ -62,6 +63,7 @@ namespace ConsoleGame1.Logic.Model
         /// Баланс счета.
         /// </summary>s
         public int Balance { get; set; } = 0;
+        public Statics CurrentStatic;
 
         /// <summary>
         /// Создание пользователя только с логином для проверки на уникальность/существование.
@@ -80,6 +82,7 @@ namespace ConsoleGame1.Logic.Model
         /// <param name="BirthDay"> Дата рождения. </param>
         public User(string Name,string Password,DateTime BirthDay)
         {
+            CurrentStatic = new Statics();
             DateOfRegistration = DateTime.Now;
             ID = ++NextID;
             Login = Name;

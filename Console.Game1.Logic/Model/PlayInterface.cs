@@ -20,6 +20,10 @@ namespace ConsoleGame1.Logic.Model
         public int XPosByCreatedStuff { get; set; } = 100;
         public int YPosByCreatedStuff { get; set; } = 50;
         public ConsoleColor ColorOfStuff { get; set; } = ConsoleColor.White;
+        public static int WhitePrice { get; } = 10;
+        public static int GreenPrice { get; } = 50;
+        public static int BluePrice { get; } = 200;
+        public static int RedPrice { get; } = 1000;
 
         /// <summary>
         /// Установка центральной точки фигуры и ее перерисовка.
@@ -86,19 +90,23 @@ namespace ConsoleGame1.Logic.Model
                 switch (ColorOfStuff)
                 {
                     case ConsoleColor.White:
-                        UserController.ReturnCurentUser(UserController.CurentUserName).Balance += 10;
+                        UserController.ReturnCurentUser(UserController.CurentUserName).CurrentStatic.WhiteStuff++;
+                        UserController.ReturnCurentUser(UserController.CurentUserName).Balance += WhitePrice;
                         UserController.SaveData();
                         break;
                     case ConsoleColor.Green:
-                        UserController.ReturnCurentUser(UserController.CurentUserName).Balance += 50;
+                        UserController.ReturnCurentUser(UserController.CurentUserName).CurrentStatic.GreenStuff++;
+                        UserController.ReturnCurentUser(UserController.CurentUserName).Balance += GreenPrice;
                         UserController.SaveData();
                         break;
                     case ConsoleColor.Blue:
-                        UserController.ReturnCurentUser(UserController.CurentUserName).Balance += 200;
+                        UserController.ReturnCurentUser(UserController.CurentUserName).CurrentStatic.BlueStuff++;
+                        UserController.ReturnCurentUser(UserController.CurentUserName).Balance += BluePrice;
                         UserController.SaveData();
                         break;
                     case ConsoleColor.Red:
-                        UserController.ReturnCurentUser(UserController.CurentUserName).Balance += 1000;
+                        UserController.ReturnCurentUser(UserController.CurentUserName).CurrentStatic.RedStuff++;
+                        UserController.ReturnCurentUser(UserController.CurentUserName).Balance += RedPrice;
                         UserController.SaveData();
                         break;
                 }
