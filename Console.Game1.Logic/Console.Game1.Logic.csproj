@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\GameController.cs" />
+    <Compile Include="Controller\OptionController.cs" />
     <Compile Include="Controller\StaticsController.cs" />
     <Compile Include="Controller\UserController.cs" />
     <Compile Include="Model\ChoseMenu.cs" />

@@ -55,7 +55,7 @@ namespace ConsoleGame1
                         StaticsController.StaticList();
                         break;
                     case OptionButton:
-                        //TODO: добавить действия..
+                        OptionController.OptionMenu();
                         break;
                     case ExitButton:
                         Thread.CurrentThread.Abort();

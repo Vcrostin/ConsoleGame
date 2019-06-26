@@ -24,6 +24,7 @@ namespace ConsoleGame1.Logic.Model
         public static int GreenPrice { get; } = 50;
         public static int BluePrice { get; } = 200;
         public static int RedPrice { get; } = 1000;
+        public static ConsoleColor ShipColor { get; set; } = ConsoleColor.White;
 
         /// <summary>
         /// Установка центральной точки фигуры и ее перерисовка.
@@ -68,6 +69,7 @@ namespace ConsoleGame1.Logic.Model
         /// </summary>
         public void Draw()
         {
+            Console.ForegroundColor = ShipColor;
             Console.SetCursorPosition(XBySpace - 1, YBySpace);
             Console.Write("|X|");
             ComparePosStuffAndSpace();
@@ -85,8 +87,8 @@ namespace ConsoleGame1.Logic.Model
             if ((XPosByCreatedStuff == XBySpace) && (YPosByCreatedStuff == YBySpace))
             {
                 Random random = new Random();
-                XPosByCreatedStuff = random.Next(Console.WindowWidth - 3) + 1;
-                YPosByCreatedStuff = random.Next(Console.WindowHeight - 2) + 1;
+                XPosByCreatedStuff = random.Next(Console.WindowWidth - 7) + 3;
+                YPosByCreatedStuff = random.Next(Console.WindowHeight - 6) + 3;
                 switch (ColorOfStuff)
                 {
                     case ConsoleColor.White:
